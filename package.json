@@ -1,14 +1,14 @@
 {
   "name": "log4t",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "author": "drao",
   "license": "MIT",
   "keywords": [
     "log",
     "logger"
   ],
-  "main": "build/logger.service.js",
-  "types": "build/logger.service.d.ts",
+  "main": "build/main.js",
+  "types": "build/main.d.ts",
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
@@ -16,13 +16,12 @@
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "tslint -p tsconfig.json",
     "prepare" : "npm run build",
-    "prepublishOnly" : "npm test && npm run lint",
-    "preversion" : "npm run lint",
+    "prepublishOnlyTEST" : "npm test && npm run lint",
     "version" : "npm run format && git add -A src",
     "postversion" : "git push && git push --tags"
   },
   "files": [
-    "build/**/*/"
+    "build"
   ],
   "repository": {
     "type": "git",
