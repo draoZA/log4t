@@ -6,9 +6,8 @@ import { LogglyAdapter } from './adapter/loggly';
 import { LoggerConsoleOnly } from './logger/console-only';
 import { LoggerDefault } from './logger/default';
 import { ILogger } from './logger/logger';
-import { LoggerConfig } from './logger/loggerConfig'
-import { LoggerServiceConfig } from './loggerServiceConfig'
-
+import { LoggerConfig } from './logger/loggerConfig';
+import { LoggerServiceConfig } from './loggerServiceConfig';
 
 export class LoggerService {
   private loggerList: ILogger[] = new Array();
