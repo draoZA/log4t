@@ -3,13 +3,17 @@ import { ConsoleAdapter } from './adapter/console';
 import { ConsoleOnlyAdapter } from './adapter/console-only';
 import { LogglyAdapter } from './adapter/loggly';
 
+import { LoggerConfig } from './helper/loggerConfig';
 import { LoggerConsoleOnly } from './logger/console-only';
 import { LoggerDefault } from './logger/default';
 import { ILogger } from './logger/logger';
-import { LoggerConfig } from './logger/loggerConfig';
 import { LoggerServiceConfig } from './loggerServiceConfig';
 
 export class LoggerService {
+
+  constructor() {
+    console.error('TEST');
+  }
 
   set enabled(val: boolean) {
     this.config.enabled = val;

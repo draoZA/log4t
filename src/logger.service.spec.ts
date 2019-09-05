@@ -1,6 +1,7 @@
 import { ILoggerAdapter } from './adapter/adapter';
+import { LogLevel } from './helper/logLevel';
+import { LogType } from './helper/logType';
 import { LoggerService } from './logger.service';
-import { LogLevel, LogType } from './logger/logger';
 
 // tslint:disable-next-line: no-console
 

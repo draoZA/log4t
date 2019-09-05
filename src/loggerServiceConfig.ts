@@ -1,4 +1,4 @@
-import { LoggerConfig } from './logger/loggerConfig';
+import { LoggerConfig } from './helper/loggerConfig';
 
 export class LoggerServiceConfig {
   public enabled = true;

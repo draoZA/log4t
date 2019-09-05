@@ -1,4 +1,5 @@
-import { LogLevel } from './logger';
+import { LogLevel } from './logLevel';
+
 
 export class LoggerConfig {
   public name = '';

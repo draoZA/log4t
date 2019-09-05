@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { LogLevel, LogType } from '../logger/logger';
+import { LogLevel } from '../helper/logLevel';
+import { LogType } from '../helper/logType';
 import { ILoggerAdapter, LoggerAdapter } from './adapter';
 
 class LogglyConfig {

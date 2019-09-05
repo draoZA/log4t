@@ -1,4 +1,5 @@
-import { LogLevel, LogType } from './logger';
+import { LogLevel } from '../helper/logLevel';
+import { LogType } from '../helper/logType';
 import { Logger } from './logger';
 
 /**

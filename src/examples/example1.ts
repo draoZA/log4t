@@ -1,5 +1,7 @@
+import { LogLevel } from '../helper/logLevel';
 import { LoggerService } from '../logger.service';
-import { ILogger, LogLevel } from '../logger/logger';
+import { ILogger} from '../logger/logger';
+
 
 const env = {
   logging: {

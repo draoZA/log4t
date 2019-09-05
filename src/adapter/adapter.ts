@@ -1,4 +1,5 @@
-import { LogLevel, LogType } from '../logger/logger';
+import { LogLevel } from '../helper/logLevel';
+import { LogType } from '../helper/logType';
 
 /**
  * Logging adapters/appenders. Initialize first!

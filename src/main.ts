@@ -9,4 +9,7 @@ export * from './adapter/loggly';
 export * from './logger/console-only';
 export * from './logger/default';
 export * from './logger/logger';
-export * from './logger/loggerConfig';
+
+export * from './helper/loggerConfig';
+export * from './helper/logLevel';
+export * from './helper/logType';

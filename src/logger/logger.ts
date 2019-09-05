@@ -1,27 +1,8 @@
 import * as stackTraceParser from 'stacktrace-parser';
 import { ILoggerAdapter } from '../adapter/adapter';
-import { LoggerConfig } from './loggerConfig';
-
-/**
- * The possible log levels.
- */
-export enum LogLevel {
-  OFF,
-  ERROR,
-  WARN,
-  INFO,
-  DEBUG,
-  ALL,
-}
-
-export enum LogType {
-  ERROR,
-  WARN,
-  INFO,
-  DEBUG,
-  ENTER,
-  EXIT,
-}
+import { LoggerConfig } from '../helper/loggerConfig';
+import { LogLevel } from '../helper/logLevel';
+import { LogType } from '../helper/logType';
 
 export interface ILogger {
   name: string;
