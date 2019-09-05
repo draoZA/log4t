@@ -38,6 +38,11 @@ export class LoggerConsoleOnly extends Logger {
     return this.log(LogLevel.DEBUG, LogType.EXIT);
   }
 
+  /**
+   * it binds console therefore never received message & can't prepare it
+   * @param lvl
+   * @param type 
+   */
   private log(lvl: LogLevel, type: LogType) {
     if (this.enabled && this.level >= lvl) {
       const output = this.formatedOutput(type);

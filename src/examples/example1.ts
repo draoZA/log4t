@@ -42,27 +42,43 @@ loggerService.initialize(env.logging);
 const logger: ILogger = loggerService.getLogger();
 const logger1: ILogger = loggerService.getLogger('test1');
 const logger2: ILogger = loggerService.getLogger('test2');
-const logger3: ILogger = loggerService.getLogger('test3');
+
 
 // this logger wasn't configured
 const logger4: ILogger = loggerService.getLogger('test4');
 logger4.level = LogLevel.WARN;
 
-doSomeLogging();
-someMethod();
+doSomeLogging(logger);
+doSomeLogging(logger1);
+doSomeLogging(logger2);
+someMethod(logger);
+enhancedLogging(logger);
+enhancedLogging(logger1);
 
-function doSomeLogging() {
-  logger.debug('here is some message ');
-  logger1.info('here is some message test1 ');
-  logger2.error('here is some message test2 ');
-  logger3.debug('here is some message test3 ');
-  logger4.debug('here is some message test4 ');
-  logger4.warn('here is some message test4 ');
+function doSomeLogging(logger: ILogger) {
+  console.log(`logger: ${logger.name}, current log level: ${LogLevel[logger.level]}, logger enabled: ${logger.enabled}, adapter: ${logger.getAdapterList()}`);
+  logger.debug('debug message');
+  logger.info('info message');
+  logger.warn('warn message');
+  logger.error('error message');
 }
 
-function someMethod() {
+function someMethod(logger: ILogger) {
   const method = 'someMethod';
   logger.enter(method);
   logger.debug('some debugging in between');
   logger.exit(method);
+}
+
+function enhancedLogging(logger: ILogger) {
+  const demo = {
+    prop1: 13,
+    prop2: 'tester'
+  };
+  const err = new Error('some error');
+  logger.debug(demo);
+  logger.debug(13);
+  logger.debug(false);
+  logger.error(err);
+  logger.debug(err.message);
 }

@@ -10,6 +10,15 @@ import { LoggerConfig } from './logger/loggerConfig';
 import { LoggerServiceConfig } from './loggerServiceConfig';
 
 export class LoggerService {
+
+  set enabled(val: boolean) {
+    this.config.enabled = val;
+    this.loggerList.forEach(logger => (logger.enabled = this.config.enabled));
+  }
+
+  get enabled() {
+    return this.config.enabled;
+  }
   private loggerList: ILogger[] = new Array();
   private initialized = false;
   private config = new LoggerServiceConfig();
@@ -67,6 +76,31 @@ export class LoggerService {
     return this.adapterList;
   }
 
+  /**
+   * Get logger. If logger doesn't exist yet, create new logger.
+   * Make sure adpater are registered first.
+   * @param name of logger
+   */
+  public getLogger(name?: string): ILogger {
+    if (!this.initialized) {
+      this.initialize();
+    }
+
+    if (!name) {
+      name = 'root';
+    }
+
+    // only add logger if not yet exists, otherwise return existing logger
+    const logger = this.loggerList.find(item => item.name === name);
+    if (logger) {
+      return logger;
+    } else {
+      const newLogger = this.createLogger(name);
+      this.loggerList.push(newLogger);
+      return newLogger;
+    }
+  }
+
   private createDefaultLogger(name: string): ILogger {
     const logger = new LoggerConsoleOnly(name);
     return logger;
@@ -112,39 +146,5 @@ export class LoggerService {
       logger.enabled = false;
     }
     return logger;
-  }
-
-  /**
-   * Get logger. If logger doesn't exist yet, create new logger.
-   * Make sure adpater are registered first.
-   * @param name of logger
-   */
-  public getLogger(name?: string): ILogger {
-    if (!this.initialized) {
-      this.initialize();
-    }
-
-    if (!name) {
-      name = 'root';
-    }
-
-    // only add logger if not yet exists, otherwise return existing logger
-    const logger = this.loggerList.find(item => item.name === name);
-    if (logger) {
-      return logger;
-    } else {
-      const newLogger = this.createLogger(name);
-      this.loggerList.push(newLogger);
-      return newLogger;
-    }
-  }
-
-  set enabled(val: boolean) {
-    this.config.enabled = val;
-    this.loggerList.forEach(logger => (logger.enabled = this.config.enabled));
-  }
-
-  get enabled() {
-    return this.config.enabled;
   }
 }

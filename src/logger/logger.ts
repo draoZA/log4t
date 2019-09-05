@@ -28,12 +28,12 @@ export interface ILogger {
   enabled: boolean;
   stackTrace: boolean;
   level: LogLevel;
-  debug(message: string): void;
-  info(message: string): void;
-  warn(message: string): void;
-  error(message: string): void;
-  enter(message: string): void;
-  exit(message: string): void;
+  debug(message: any, ...args: any[]): void;
+  info(message: any, ...args: any[]): void;
+  warn(message: any, ...args: any[]): void;
+  error(message: any, ...args: any[]): void;
+  enter(message: any, ...args: any[]): void;
+  exit(message: any, ...args: any[]): void;
   initialize(env: any): void;
   addAdapter(adapter: ILoggerAdapter): ILogger;
   getAdapterList(): string[];
@@ -41,23 +41,6 @@ export interface ILogger {
 }
 
 export abstract class Logger implements ILogger {
-  // private dateTimeFormat = '[yyyy-MM-dd HH:mm:ss:SSS]';
-  protected config: LoggerConfig;
-
-  protected adapterList: ILoggerAdapter[];
-
-  constructor(protected loggerName: string) {
-    this.config = new LoggerConfig();
-    this.config.name = loggerName;
-    this.adapterList = new Array();
-  }
-
-  public abstract debug(): void;
-  public abstract info(): void;
-  public abstract warn(): void;
-  public abstract error(): void;
-  public abstract enter(): void;
-  public abstract exit(): void;
 
   get name(): string {
     return this.config.name;
@@ -86,6 +69,23 @@ export abstract class Logger implements ILogger {
   set stackTrace(val: boolean) {
     this.config.stacktrace = val;
   }
+  // private dateTimeFormat = '[yyyy-MM-dd HH:mm:ss:SSS]';
+  protected config: LoggerConfig;
+
+  protected adapterList: ILoggerAdapter[];
+
+  constructor(protected loggerName: string) {
+    this.config = new LoggerConfig();
+    this.config.name = loggerName;
+    this.adapterList = new Array();
+  }
+
+  public abstract debug(message: any, ...args: any[]): void;
+  public abstract info(message: any, ...args: any[]): void;
+  public abstract warn(message: any, ...args: any[]): void;
+  public abstract error(message: any, ...args: any[]): void;
+  public abstract enter(message: any, ...args: any[]): void;
+  public abstract exit(message: any, ...args: any[]): void;
 
   public initialize(env: any) {
     this.config.load(env);
@@ -120,6 +120,56 @@ export abstract class Logger implements ILogger {
     return result;
   }
 
+  /**
+   * inspired by ngx-logger
+   * @param message 
+   */
+  protected prepareMessage(message:any): string {
+
+    message = typeof message === 'function' ? message() : message;
+    message = message instanceof Error ? message.stack : message;
+    // message = message instanceof Error ? message.message : message;
+
+    try {
+      if (typeof message !== 'string' && !(message instanceof Error)) {
+        message = JSON.stringify(message, null, 2);
+      }
+    } catch (e) {
+      // additional = [message, ...additional];
+      message = 'The provided "message" value could not be parsed with JSON.stringify().';
+    }
+
+    return message;
+  }
+  
+  
+  /**
+   * inspired by ngx-logger
+   * @param message 
+   */
+  protected prepareAdditionalParameters(additional: any[]) {
+    if (additional === null || additional === undefined) {
+      return null;
+    }
+
+    return additional.map((next, idx) => {
+      try {
+        // We just want to make sure the JSON can be parsed, we do not want to actually change the type
+        if (typeof next === 'object') {
+          JSON.stringify(next);
+        }
+
+        return next;
+      } catch (e) {
+        return `The additional[${idx}] value could not be parsed using JSON.stringify().`;
+      }
+    });
+  }
+
+  /**
+   * 
+   * @param type add timestamp and deub level plus optional caller
+   */
   protected formatedOutput(type: LogType): string {
     let loggerID = '';
     if (this.config.name !== 'root') {

@@ -310,6 +310,41 @@ describe('LoggerService: Message Log with different config options ', () => {
     expect(console.warn).toHaveBeenCalledWith(jasmine.stringMatching('message'));
   });
 
+  it('object logged', () => {
+    logger = loggerService.getLogger();
+    const obj = {
+      prop1: 1,
+      prop2: 'test'
+    }
+    logger.debug(obj);
+    expect(console.log).toHaveBeenCalledWith(jasmine.stringMatching('[DEBUG]'));
+    expect(console.log).toHaveBeenCalledWith(jasmine.stringMatching('"prop1": 1'));
+    expect(console.log).toHaveBeenCalledWith(jasmine.stringMatching('"prop2": "test"'));
+  });
+
+  it('number logged', () => {
+    logger = loggerService.getLogger();
+    logger.debug(1);
+    expect(console.log).toHaveBeenCalledWith(jasmine.stringMatching('[DEBUG]'));
+    expect(console.log).toHaveBeenCalledWith(jasmine.stringMatching('1'));
+  });
+
+  it('boolean logged', () => {
+    logger = loggerService.getLogger();
+    logger.debug(false);
+    expect(console.log).toHaveBeenCalledWith(jasmine.stringMatching('[DEBUG]'));
+    expect(console.log).toHaveBeenCalledWith(jasmine.stringMatching('false'));
+  });
+
+  it('error logged', () => {
+    logger = loggerService.getLogger();
+    const err = new Error('test');
+    logger.debug(err);
+    expect(console.log).toHaveBeenCalledWith(jasmine.stringMatching('[DEBUG]'));
+    expect(console.log).toHaveBeenCalledWith(jasmine.stringMatching('Error: test'));
+  });
+
+
   it('loggly - debug: debug message logged', () => {
     logger = loggerService.getLogger();
     const adapter = loggerService.getAdapter('loggly');
