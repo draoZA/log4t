@@ -11,9 +11,6 @@ import { LoggerServiceConfig } from './loggerServiceConfig';
 
 export class LoggerService {
 
-  constructor() {
-    console.error('TEST');
-  }
 
   set enabled(val: boolean) {
     this.config.enabled = val;
