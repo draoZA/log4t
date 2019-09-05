@@ -49,6 +49,56 @@ function someMethod() {
   logger.exit(method);
 }
 ```
+#### Integration into Ionic/Angular
+
+If you want to use the logger inside a framework like Ionic or Angular rember to use the logger as singleton. Easiest is to create a new "wrapper" service. Then provide that service in app.module. Then you can use the logger in your project. 
+
+Example for Ionic (but same/similar for Angular):
+1) generate new service: ionic g service services/logger/logger (adjust directory structure to your needs)
+2) add LoggerService into providers of app.module (like you would do with any self generated services)
+3) add log4t into the newly generated
+
+```javascript
+import { Injectable } from '@angular/core';
+import { LoggerService as LoggerS, ILogger} from 'log4t';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class LoggerService {
+
+public logger: ILogger = new LoggerS().getLogger();
+
+  constructor() {
+    this.logger.debug('LoggerService initialized');
+  }
+
+}
+```
+4) reference LoggerService within your project
+
+```javascript
+import { Component, OnInit } from '@angular/core';
+import { LoggerService } from '../services/logger/logger.service';
+
+@Component({
+  selector: 'dummy',
+  templateUrl: './dummy.page.html',
+  styleUrls: ['./dummy.page.scss'],
+})
+export class DummyPage implements OnInit {
+
+private log = this.logger.logger;
+
+  constructor(private logger: LoggerService) { }
+
+  ngOnInit() {
+    this.log.debug('DummyPage init');
+  }
+
+}
+```
+To avoid writing this.logger.logger.debug() I added a convience variable log = this.logger.logger. So you only write this.log.debug()
 
 
 ## Configuration
