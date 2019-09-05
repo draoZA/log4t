@@ -10,7 +10,7 @@ Basic logger without any specific configuration.
 
 ```javascript
 import { LoggerService, ILogger, LogLevel } from 'log4t';
-const logger: ILogger = loggerService.getLogger();
+const logger: ILogger = new LoggerService().getLogger();
 logger.debug('Hello world!');
 logger.warn('oh oh, some wrong?');
 ```
@@ -20,6 +20,7 @@ logger.warn('oh oh, some wrong?');
 You can use different logger. Like one logger you use in general and one in your services. You can then enabled/disable etc them separately. The logger are complete separate. But you can still turn off logging globally.
 
 ```javascript
+const loggerService = new LoggerService();
 const logger: ILogger = loggerService.getLogger();
 const logger1: ILogger = loggerService.getLogger('services');
 logger.debug('main logger');
