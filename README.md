@@ -13,6 +13,16 @@ import { LoggerService, ILogger, LogLevel } from 'log4t';
 const logger: ILogger = new LoggerService().getLogger();
 logger.debug('Hello world!');
 logger.warn('oh oh, some wrong?');
+
+const demo = {
+    prop1: 13,
+    prop2: 'tester'
+  };
+const err = new Error('some error');
+logger.debug(demo);
+logger.debug(13);
+logger.debug(false);
+logger.error(err);
 ```
 
 #### Add extra logger
