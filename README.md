@@ -1,6 +1,20 @@
 # Log4t - a Simple Logger for Typescript
 
-Simple logger for Javascript/Typescript. Supports by default console output and loggly. You can add custom adapters if required.
+Simple logger for Javascript/Typescript. Also tested with Ionic/Angular.
+
+Features:
+- Supports out of the box console output and loggly for remote logging. 
+- Logger can be used with node & web apps. Remote access done via Axios
+- You can easily add custom adapters if required. Only need to implement the actual logging method. Rest can be inherited from default. Examples available.
+- Support for multiple loggers with different configs. Allows for example to only enable logging in certain sections of the app and not getting spammed by all log messages :-)
+- Convience method to log entering and exiting of methods/functions
+- Allows to log callee function, ie where the log message was called
+- Console log supports bind which then shows exact location of call in console - like you would have used console.log etc
+- Remote logging supported via Axios
+
+Several examples and config description below should make usage easy. Also adding custom adapters for other (remote) log services should be fairly straight forward. 
+
+ENJOY! :-)
 
 ## Example
 
